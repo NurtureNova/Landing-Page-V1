@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-montserrat: var(--font-montserrat);
+  --font-urbanist: var(--font-font-urbanist);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  
+}
+
+.bg-container {
+  position: relative;
+  background-image: url("https://pbs.twimg.com/media/Gp0UuYcXYAAZ4fW?format=jpg&name=4096x4096");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  z-index: 0;
+}
+
+.bg-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(28, 27, 27, 0.5);
+  z-index: 1;
+}
+
+.bg-container > * {
+  position: relative;
+  z-index: 2;
+}
