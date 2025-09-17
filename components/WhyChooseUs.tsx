@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 const reasons = [
-  { 
+  {
     title: "1-on-1 Personalised Learning",
     description:
       "Every student is unique. That’s why our sessions are fully personalised — one tutor, one student — tailored to your child’s pace, strengths, and goals.",
@@ -62,7 +61,6 @@ const WhyChooseUs: React.FC = () => {
   return (
     <section>
       <div className="mx-6 lg:mx-28 py-14 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 space-y-6 md:space-y-0">
-        {/* Image Section */}
         <div className="flex justify-center items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -70,18 +68,14 @@ const WhyChooseUs: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <Image
-              src="https://pbs.twimg.com/media/Gp0VUkVWkAAdIp5?format=jpg&name=4096x4096" 
+            <img
+              src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858296/happy-little-girl-home-online-school-with-laptop_k8in12.jpg"
               alt="Learning Platform"
               className="w-[400px] md:max-w-[450px] h-[300px] md:h-[550px] rounded-xl shadow-2xl object-cover drop-shadow"
-              width={400}
-              height={550}
-              loading="lazy"
             />
           </motion.div>
         </div>
 
-        {/* Text & Accordion Section */}
         <div className="flex flex-col justify-center">
           <div className="text-center md:text-left space-y-12">
             <motion.h1

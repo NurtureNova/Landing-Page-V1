@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const containerVariants = {
@@ -86,13 +85,10 @@ const HowWeOperate = () => {
         className="md:w-1/2 flex justify-center"
         variants={imageVariants}
       >
-        <Image
-          src="https://pbs.twimg.com/media/Gp0WNrNXQAAGo-c?format=jpg&name=4096x4096"
+        <img
+          src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858302/side-view-little-girl-online-school-with-tablet_vtmhzs.jpg"
           alt="Online teaching illustration"
           className="w-full max-w-md rounded-md"
-          loading="lazy"
-          width={550}
-          height={400}
         />
       </motion.div>
     </motion.section>

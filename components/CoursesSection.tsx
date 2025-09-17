@@ -7,7 +7,7 @@ interface ServiceItem {
   id: number;
   title: string;
   link: string;
-  icon: string; // image path
+  icon: string;
   delay: number;
 }
 
