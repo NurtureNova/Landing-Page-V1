@@ -34,9 +34,14 @@ export default function Navbar() {
           </Link>
         </motion.div>
 
-        <div className="hidden md:flex items-center space-x-16 text-[#111111] text-xl font-semibold">
-          {["Home", "About", "FAQs", "Contact"].map((item) => {
-            const href = item === "Home" ? "/" : `/${item.toLowerCase()}`;
+        <div className="hidden md:flex items-center space-x-16 text-[#111111] text-2xl font-semibold">
+          {["Home", "About", "Meet Our Team", "FAQs", "Contact"].map((item) => {
+            const href =
+              item === "Home"
+                ? "/"
+                : item === "Meet Our Team"
+                  ? "/our-tutors"
+                  : `/${item.toLowerCase()}`;
             const isActive = pathname === href;
 
             return (
@@ -44,7 +49,7 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={`hover:text-gray-300 ${
-                    isActive ? "text-[#477EFA] underline" : "text-[#111111]"
+                    isActive ? "text-[#FE2296] underline" : "text-[#111111]"
                   }`}
                 >
                   {item}
@@ -72,8 +77,8 @@ export default function Navbar() {
               transition={{ duration: 0.3 }}
               className="absolute top-full min-w-5/6 rounded-lg bg-black/20 bg-opacity-80 py-6 flex flex-col items-center space-y-4 text-[#111111] text-xl font-montserrat font-bold"
             >
-              {["Home", "About", "FAQs", "Contact"].map((item) => {
-                const href = item === "Home" ? "/" : `/${item.toLowerCase()}`;
+              {["Home", "About", "Our Tutors", "FAQs", "Contact"].map((item) => {
+                const href = item === "Home" ? "/" : item === "Our Tutors" ? "/our-tutors" : `/${item.toLowerCase()}`;
                 const isActive = pathname === href;
 
                 return (
@@ -82,7 +87,7 @@ export default function Navbar() {
                     href={href}
                     onClick={() => setIsOpen(false)}
                     className={`hover:text-gray-300 ${
-                      isActive ? "text-[#477EFA] underline" : "text-[#111111]"
+                      isActive ? "text-[#FE2296] underline" : "text-[#111111]"
                     }`}
                   >
                     {item}

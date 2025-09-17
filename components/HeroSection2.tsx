@@ -17,7 +17,7 @@ const imageVariants = {
 
 const HeroSection2: React.FC = () => {
   return (
-    <section className="bg-[#f7f7f7]">
+    <section className="bg-[#f7f7f7]"> 
       <motion.div
         variants={imageVariants}
         initial="hidden"
@@ -26,12 +26,12 @@ const HeroSection2: React.FC = () => {
         className="w-full overflow-hidden shadow-md"
       >
         <Image
-          src="https://pbs.twimg.com/media/Gp0TkWVXgAANCl7?format=jpg&name=4096x4096"
+          src="https://res.cloudinary.com/ddxssowqb/image/upload/v1746605937/Our_Passionate_Educators_pfpq1m.png"
           alt="Online Tutors"
           className="object-cover rounded-[30px] w-full h-full p-4"
-          loading="lazy"
           width={5875}
           height={4925}
+          priority
         />
       </motion.div>
     </section>

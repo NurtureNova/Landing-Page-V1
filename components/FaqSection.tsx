@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import faqIllustration from "@/public/images/faqimg.png";
+import { AnimatePresence, motion } from "framer-motion";
 
 const faqs = [
   {
@@ -63,7 +62,6 @@ const FaqSection = () => {
       </motion.h2>
 
       <div className="flex flex-col md:flex-row items-center gap-12">
-        {/* Left Illustration */}
         <motion.div
           className="md:w-1/2 flex justify-center"
           initial={{ opacity: 0, x: -50 }}
@@ -72,13 +70,15 @@ const FaqSection = () => {
           transition={{ duration: 0.5 }}
         >
           <Image
-            src={faqIllustration}
+            src="https://res.cloudinary.com/ddxssowqb/image/upload/v1746607947/faqimg_jzk5on.png"
             alt="FAQ Illustration"
+            width={500}
+            priority
+            height={500}
             className="w-full max-w-md"
           />
         </motion.div>
 
-        {/* Right Accordion */}
         <motion.div
           className="md:w-1/2 space-y-4 w-full"
           initial="hidden"

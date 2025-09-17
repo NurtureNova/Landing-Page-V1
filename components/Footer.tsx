@@ -74,13 +74,13 @@ export default function Footer() {
             Quick Links
           </h4>
           <ul className="space-y-2 text-base font-medium font-montserrat ">
-            {["Home", "About", "FAQs", "Contact"].map((link, i) => (
+            {["Home", "About", "Our Tutors", "FAQs", "Contact"].map((link, i) => (
               <motion.li
                 key={i}
                 whileHover={{ x: 5 }}
                 transition={{ type: "spring", stiffness: 200 }}
               >
-                <Link href={link === "Home" ? "/" : `/${link.toLowerCase()}`}>
+                <Link href={link === "Home" ? "/" : link === "Our Tutors" ? "/our-tutors" : `/${link.toLowerCase()}`}>
                   {link}
                 </Link>
               </motion.li>

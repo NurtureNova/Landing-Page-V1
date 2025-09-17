@@ -1,14 +1,7 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-
-const teamMembers = [
-  {
-    src: "https://pbs.twimg.com/media/Gp0Sns3XsAAjUkR?format=jpg&name=4096x4096",
-    alt: "Team Member 2",
-  },
-];
 
 const imageVariants = {
   hidden: { opacity: 0, x: -50 },
@@ -27,28 +20,24 @@ export default function AboutSection() {
   return (
     <section className="py-16 px-6 md:px-28 bg-white flex flex-col lg:flex-row items-center justify-between">
       <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
-        {teamMembers.map((member, index) => (
-          <motion.div
-            key={index}
-            custom={index}
-            variants={imageVariants}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            className="h-60 md:w-80 md:h-88 shadow-2xl rounded-[40px] overflow-hidden"
-            whileHover={{ scale: 1.05, rotate: 2 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            <Image
-              src={member.src}
-              alt={member.alt}
-              width={550}
-              height={400}
-              className="object-cover w-full h-full px-4"
-              loading="lazy"
-            />
-          </motion.div>
-        ))}
+        <motion.div
+          variants={imageVariants}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          className="h-60 md:w-80 md:h-88 shadow-2xl rounded-[40px] overflow-hidden"
+          whileHover={{ scale: 1.05, rotate: 2 }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+          <Image
+            src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858350/About_US_r9rba3.png"
+            alt="Team Member"
+            width={500}
+            height={500}
+            className="object-cover w-full h-full px-4"
+            priority
+          />
+        </motion.div>
       </div>
 
       <motion.div

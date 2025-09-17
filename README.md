@@ -90,7 +90,7 @@ Visit `http://localhost:3000` to view it in the browser.
 
 To build and export for static hosting:
 
-1. Update `next.config.js` with:
+1. Update `next.config.ts` with:
 
 ```ts
 const nextConfig = {
