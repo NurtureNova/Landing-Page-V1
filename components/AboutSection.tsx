@@ -3,27 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const imageVariants = {
-  hidden: { opacity: 0, x: -50 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: i * 0.2,
-      type: "spring",
-      stiffness: 100,
-    },
-  }),
-};
-
 export default function AboutSection() {
   return (
     <section className="py-16 px-6 md:px-28 bg-white flex flex-col lg:flex-row items-center justify-between">
       <div className="flex gap-4 flex-wrap justify-center lg:justify-start">
         <motion.div
-          variants={imageVariants}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           className="h-60 md:w-80 md:h-88 shadow-2xl rounded-[40px] overflow-hidden"
           whileHover={{ scale: 1.05, rotate: 2 }}
