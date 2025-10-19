@@ -13,6 +13,11 @@ const testimonials = [
     name: "Mrs Benjami B.U",
     role: "Parent",
   },
+  {
+    text: `It is really impressive that Omotara passed her tests with Grammar school that I wanted her to attend`,
+    name: "Mrs Maribeth",
+    role: "Parent",
+  },
 ];
 
 const containerVariants = {
@@ -54,7 +59,7 @@ export default function TestimonialSection() {
         </h2>
 
         <motion.div
-          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
+          className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
