@@ -75,10 +75,7 @@ export const tutorsData: TutorDetail[] = [
         "Networking Foundations",
       ],
     },
-    interests: [
-      "Sport enthusiast",
-
-    ],
+    interests: ["Sport enthusiast"],
 
     achievements: [
       "Graduated with an upper class honours at the University",
@@ -118,7 +115,7 @@ export const tutorsData: TutorDetail[] = [
     position: "English Tutor",
     nationality: "Nigerian",
     gender: "Female",
-    image: "images/asima.jpg",
+    image: "/images/asima.jpg",
     specialties: ["English Language", "Biology"],
 
     nurtureNovaStartDate: "2025-10-13",
@@ -141,7 +138,7 @@ export const tutorsData: TutorDetail[] = [
     position: "Graphic Designer",
     nationality: "Nigerian",
     gender: "Male",
-    image: "images/munabau.jpg",
+    image: "/images/munabau.jpg",
     specialties: [
       "Mathematics",
       "Graphic Design",

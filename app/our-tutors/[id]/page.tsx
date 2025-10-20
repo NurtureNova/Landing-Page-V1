@@ -29,7 +29,7 @@ export default function TutorDetailPage() {
             Tutor Not Found
           </h1>
           <Link href="/our-tutors">
-            <button className="bg-[#FE2296] text-white px-6 py-3 rounded-lg">
+            <button className="bg-[#FE2296] text-lg font-medium text-white px-6 py-3 rounded-lg">
               Back to Tutors
             </button>
           </Link>

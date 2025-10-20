@@ -132,7 +132,7 @@ export default function OurTutorsPage() {
                     src={tutor.image}
                     alt={tutor.name}
                     fill
-                    className="object-fit transition-transform duration-300 hover:scale-110"
+                    className="w-[866px] h-[1080px] object-fit transition-transform duration-300 hover:scale-110"
                   />
                 </div>
                 <div className="p-6">
