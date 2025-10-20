@@ -46,7 +46,7 @@ const HeroSection2: React.FC = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
-        className="mx-6 lg:mx-28"
+        className="mx-6 lg:mx-20"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Text Content - Left Side */}

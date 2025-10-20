@@ -18,7 +18,7 @@ export default function Navbar() {
       transition={{ type: "spring", stiffness: 120 }}
       className=" fixed top-6 w-full  z-50"
     >
-      <div className="mx-6 lg:mx-28 rounded-2xl px-8 md:py-4 bg-white/10 backdrop-blur-md pb-4 pt-1 flex border border-white/20 shadow-md justify-between items-center">
+      <div className="mx-6 lg:mx-20 rounded-2xl px-8 md:py-4 bg-white/10 backdrop-blur-md pb-4 pt-1 flex border border-white/20 shadow-md justify-between items-center">
         <motion.div
           whileHover={{ rotate: 10 }}
           className="w-12 h-12 rounded-full flex items-center justify-center"

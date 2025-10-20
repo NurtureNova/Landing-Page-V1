@@ -22,7 +22,7 @@ const socialIcons = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#477EFA] text-white px-6 md:px-28 py-10">
+    <footer className="bg-[#477EFA] text-white px-6 md:px-20 py-10">
       <motion.div
         className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10"
         initial="hidden"

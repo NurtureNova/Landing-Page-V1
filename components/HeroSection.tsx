@@ -25,7 +25,7 @@ export default function HeroSection() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="bg-container bg-black/35 pt-28"
+      className="bg-container bg-black/35 pt-28 lg:min-h-[800px]"
     >
       <div className="mx-6 lg:mx-28 py-28 md:py-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
