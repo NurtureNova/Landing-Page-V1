@@ -3,8 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { MdCalendarToday } from "react-icons/md";
 
 const containerVariants = {
   hidden: {},
@@ -50,56 +48,50 @@ const HeroSection2: React.FC = () => {
         viewport={{ once: true, amount: 0.3 }}
         className="mx-6 lg:mx-28"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Text Content - Left Side */}
-          <motion.div variants={textVariants} className="space-y-6">
+          <motion.div variants={textVariants} className="space-y-4">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold text-gray-900 leading-tight">
-              Our Passionate{" "}
-              <span className="text-[#FE2296]">Educators</span>
+              A message from <span className="text-[#FE2296]">Our Founder</span>
             </h2>
 
             <p className="text-base md:text-lg font-urbanist text-gray-700 leading-relaxed">
-              Meet our exceptional team of dedicated tutors who bring expertise,
-              passion, and personalized attention to every student. Our educators
-              are carefully selected professionals committed to helping your child
-              excel in their academic journey.
+              At NurtureNova Learning, we believe that every child has limitless
+              potential. They simply need the right guidance, environment, and
+              support to thrive.{" "}
             </p>
 
             <p className="text-base md:text-lg font-urbanist text-gray-700 leading-relaxed">
-              With backgrounds in tech, academics, and education, our tutors create
-              engaging, interactive learning experiences tailored to each
-              student&apos;s unique needs and learning style.
+              When we started this journey, our mission was simple: to make
+              quality learning accessible, personalised, and inspiring.
+              Education isn’t just about passing exams; it’s about building
+              confidence, nurturing curiosity, and equipping young minds with
+              the skills to excel in life.
             </p>
 
-            <motion.div className="flex gap-4 pt-4">
-              <Link href="/our-tutors">
-                <motion.button
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "#FFFFFF",
-                    color: "#FE2296",
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="bg-[#FE2296] text-white hover:bg-white hover:text-[#FE2296] border-2 border-[#FE2296] text-base font-bold px-6 py-3 rounded-full transition duration-300 font-urbanist"
-                >
-                  Meet Our Tutors
-                </motion.button>
-              </Link>
+            <p className="text-base md:text-lg font-urbanist text-gray-700 leading-relaxed">
+              Every lesson we deliver is a step towards empowering students to
+              dream bigger, achieve more, and believe in themselves. We’re not
+              just teaching subjects; we’re shaping futures, one learner at a
+              time.
+            </p>
 
-              <Link href="https://wa.me/2347079650962" target="_blank">
-                <motion.button
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "#FE2296",
-                    color: "#FFFFFF",
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="flex items-center gap-2 bg-white text-[#FE2296] hover:bg-[#FE2296] hover:text-white border-2 border-[#FE2296] text-base font-bold px-6 py-3 rounded-full transition duration-300 font-urbanist"
-                >
-                  <MdCalendarToday className="text-lg" />
-                  Book a Session
-                </motion.button>
-              </Link>
+            <p className="text-base md:text-lg font-urbanist text-gray-700 leading-relaxed">
+              Thank you for trusting us to be part of your child’s learning
+              journey. Together, we can build a generation of confident
+              thinkers, creators, and problem solvers.
+            </p>
+
+            <motion.div
+              className="flex flex-col items-start gap-1 pt-6 font-urbanist text-[#FE2296]"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-lg font-semibold">Rasheed Adeoti</p>
+              <p className="text-base font-medium text-gray-700 italic">
+                Founder, NurtureNova Learning
+              </p>
             </motion.div>
           </motion.div>
 
@@ -109,7 +101,7 @@ const HeroSection2: React.FC = () => {
             className="relative w-full h-[400px] md:h-[500px] lg:h-[600px]"
           >
             <Image
-              src="https://res.cloudinary.com/ddxssowqb/image/upload/v1746605937/Our_Passionate_Educators_pfpq1m.png"
+              src="images/founder.jpg"
               alt="Our Passionate Educators"
               className="object-cover rounded-[30px] shadow-lg"
               fill
