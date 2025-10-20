@@ -59,41 +59,33 @@ export const tutorsData: TutorDetail[] = [
     nationality: "Nigerian",
     gender: "Male",
     image: "/images/toyyib.png",
-    specialties: [
-      "Mathematics",
-      "Web Development",
-     
-    ],
+    specialties: ["Mathematics", "Web Development"],
     nurtureNovaStartDate: "2025-03-01",
     isActive: true,
     bio: "Toyeeb Olanrewaju Ambali is a versatile professional with a background in Electrical and Electronics Engineering and Network Engineering, bringing a few years of practical experience in the field. He has also developed expertise as a Data Entry Specialist, Brand/Graphics Designer, Researcher, and Developer, demonstrating strong analytical, technical, and problem-solving skills. \n\nIn addition to his engineering and technical background, he is passionate about teaching and tutoring, sharing knowledge across diverse areas of technology and education. With a growing interest in Cybersecurity, he continues to expand his skill set in safeguarding digital systems and networks. \n\nBeyond his professional pursuits, Toyeeb Olanrewaju Ambali is an enthusiastic sports lover, embracing discipline, teamwork, and resilience both on and off the field.",
     academicBackground: {
       degree:
         "Bachelor of Engineering in Electrical and Electronics Engineering",
-      institution: "University of Ilorin, Nigeria",
+      institution: "Olabisi Onabanjo University, Ago-Iwoye, Nigeria",
       year: "2024",
       additionalCertifications: [
-        "TESOL Certification",
-        "Creative Writing Workshop Certificate",
-        "Advanced Grammar and Composition",
+        "Project Management Professional (PMP)",
+        "Cyber security foundations",
+        "Frontend development",
+        "Networking Foundations",
       ],
     },
     interests: [
-      "Creative Writing",
-      "Poetry",
-      "African Literature",
-      "Storytelling",
-      "Language Learning",
-      "Cultural Studies",
+      "Sport enthusiast",
+
     ],
 
     achievements: [
-      "Helped students achieve top grades in GCSE English Literature",
-      "Mentored young writers in national writing competitions",
-      "Developed comprehensive curriculum for creative writing",
-      "Featured speaker at education conferences",
+      "Graduated with an upper class honours at the University",
+      "Volunteered for cyber security organization to educate general public dduring the cybersecurity month",
+      "Proficiency in Multiple Languages",
     ],
-    languages: ["English", "Yoruba", "French"],
+    languages: ["English", "Yoruba", "Arabic", "Spanish"],
   },
   {
     id: "rukayat-olabisi-lawal",
@@ -164,10 +156,7 @@ export const tutorsData: TutorDetail[] = [
       degree: "Bachelor of Science in Mathematics",
       institution: "University of Ilorin, Nigeria",
       year: "2025",
-      additionalCertifications: [
-        "Certified Graphic Designer (CGD)",
-     
-      ],
+      additionalCertifications: ["Certified Graphic Designer (CGD)"],
     },
     interests: ["Designing", "Creative Art"],
 

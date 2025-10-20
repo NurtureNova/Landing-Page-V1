@@ -104,7 +104,7 @@ const itemVariants = {
 
 export default function CoursesSection() {
   return (
-    <section className="bg-[#477EFA] text-white py-10 px-6 md:px-28">
+    <section id="courses" className="bg-[#477EFA] text-white py-10 px-6 md:px-28">
       <div className="text-center mb-8">
         <h3 className="text-[#111111] text-3xl font-montserrat font-semibold">
           Our Courses
