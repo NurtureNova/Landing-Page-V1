@@ -98,7 +98,7 @@ const HeroSection2: React.FC = () => {
           {/* Image - Right Side */}
           <motion.div
             variants={imageVariants}
-            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px]"
+            className="relative w-full h-[400px] md:h-[500px] lg:h-[700px] xl:h-[800px] "
           >
             <Image
               src="images/founder.jpg"

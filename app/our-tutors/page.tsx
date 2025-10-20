@@ -47,7 +47,7 @@ export default function OurTutorsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            Meet Our Expert Tutors
+            Meet Our Tutors
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto font-urbanist"

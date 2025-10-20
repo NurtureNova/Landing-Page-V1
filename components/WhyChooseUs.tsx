@@ -60,30 +60,31 @@ const WhyChooseUs: React.FC = () => {
 
   return (
     <section>
-      <div className="mx-6 lg:mx-28 py-14 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-8 space-y-6 md:space-y-0">
-        <div className="flex justify-center items-center">
+      <div className="mx-16 grid max-w-6xl xl:max-w-full grid-cols-1 gap-8 px-6 py-14 md:grid-cols-2 md:space-y-0 md:px-12 md:py-24 lg:items-start lg:gap-14 xl:px-16">
+        <div className="flex w-full justify-center lg:justify-start">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="w-full max-w-sm md:max-w-md xl:max-w-600"
           >
             <img
               src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858296/happy-little-girl-home-online-school-with-laptop_k8in12.jpg"
               alt="Learning Platform"
-              className="w-[400px] md:max-w-[450px] h-[300px] md:h-[550px] rounded-xl shadow-2xl object-cover drop-shadow"
+              className="h-[300px] w-full rounded-xl object-cover shadow-2xl drop-shadow md:h-[550px]"
             />
           </motion.div>
         </div>
 
-        <div className="flex flex-col justify-center">
-          <div className="text-center md:text-left space-y-12">
+        <div className="flex w-full flex-col justify-center">
+          <div className="space-y-12 text-center md:text-left">
             <motion.h1
               initial={{ opacity: 0, scale: 0.5 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-3xl text-[#111111] md:text-4xl font-montserrat font-bold !leading-snug"
+              className="text-3xl font-montserrat font-bold text-[#111111] !leading-snug md:text-4xl"
             >
               Why Choose NurtureNova Learning?
             </motion.h1>
