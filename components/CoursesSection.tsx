@@ -141,6 +141,25 @@ export default function CoursesSection() {
           </motion.div>
         ))}
       </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mt-16 text-center"
+      >
+        <p className="text-xl font-medium mb-6">Ready to give your child the best learning experience?</p>
+        <Link 
+          href="/registrations"
+          className="inline-flex items-center justify-center px-10 py-4 bg-white text-blue-600 font-bold rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 text-lg group"
+        >
+          Register Your Child Now
+          <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </motion.div>
     </section>
   );
 }
+
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 const reasons = [
@@ -69,9 +70,11 @@ const WhyChooseUs: React.FC = () => {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="w-full max-w-sm md:max-w-md xl:max-w-600"
           >
-            <img
+            <Image
               src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858296/happy-little-girl-home-online-school-with-laptop_k8in12.jpg"
               alt="Learning Platform"
+              width={600}
+              height={550}
               className="h-[300px] w-full rounded-xl object-cover shadow-2xl drop-shadow md:h-[550px]"
             />
           </motion.div>

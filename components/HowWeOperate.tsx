@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const containerVariants = {
   hidden: {},
@@ -85,9 +86,11 @@ const HowWeOperate = () => {
         className="md:w-1/2 flex justify-center"
         variants={imageVariants}
       >
-        <img
+        <Image
           src="https://res.cloudinary.com/ddxssowqb/image/upload/v1745858302/side-view-little-girl-online-school-with-tablet_vtmhzs.jpg"
           alt="Online teaching illustration"
+          width={500}
+          height={500}
           className="w-full max-w-md rounded-md"
         />
       </motion.div>

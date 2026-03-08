@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Montserrat, Urbanist } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import "react-quill-new/dist/quill.snow.css";
+import { Toaster } from "sonner";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -63,6 +63,15 @@ export const metadata: Metadata = {
   ],
   creator: "NurtureNova Learning",
   metadataBase: new URL("https://nurturenovalearning.com"),
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/nurture-nova.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/nurture-nova.png' },
+    ],
+  },
   openGraph: {
     title: "NurtureNova Learning - Personalized Online Tutoring",
     description:
@@ -99,9 +108,8 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${urbanist.variable} antialiased bg-[#FFFFFF]`}
       >
-        <Navbar />
+        <Toaster position="top-center" richColors />
         {children}
-        <Footer />
       </body>
     </html>
   );

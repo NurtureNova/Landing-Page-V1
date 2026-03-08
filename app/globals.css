@@ -67,3 +67,33 @@ body {
   -webkit-mask-image: url("/globe.svg");
   mask-image: url("/globe.svg");
 }
+
+/* Rich Text Editor Customization */
+.prose-editor .ql-container {
+  min-height: 200px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.prose-editor .ql-toolbar {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: white;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.prose-editor .ql-container {
+  border: none !important;
+}
+
+.prose-editor .ql-editor.ql-blank::before {
+  color: #cbd5e1;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.prose-editor .ql-editor {
+  padding: 1rem;
+}

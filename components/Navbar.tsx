@@ -16,9 +16,9 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 120 }}
-      className=" fixed top-6 w-full  z-50"
+      className="sticky top-0 w-full z-50 bg-white shadow-sm"
     >
-      <div className="mx-6 lg:mx-20 rounded-2xl px-8 md:py-4 bg-white/10 backdrop-blur-md pb-4 pt-1 flex border border-white/20 shadow-md justify-between items-center">
+      <div className="mx-6 lg:mx-20 px-8 py-4 flex justify-between items-center">
         <motion.div
           whileHover={{ rotate: 10 }}
           className="w-12 h-12 rounded-full flex items-center justify-center"
@@ -35,7 +35,7 @@ export default function Navbar() {
         </motion.div>
 
         <div className="hidden md:flex items-center space-x-16 text-[#111111] text-2xl font-semibold">
-          {["Home", "About", "Meet Our Team", "FAQs", "Contact"].map((item) => {
+          {["Home", "About", "Meet Our Team", "Events", "FAQs", "Contact"].map((item) => {
             const href =
               item === "Home"
                 ? "/"
@@ -77,7 +77,7 @@ export default function Navbar() {
               transition={{ duration: 0.3 }}
               className="absolute top-full min-w-5/6 rounded-lg bg-black/20 bg-opacity-80 py-6 flex flex-col items-center space-y-4 text-[#111111] text-xl font-montserrat font-bold"
             >
-              {["Home", "About", "Our Tutors", "FAQs", "Contact"].map((item) => {
+              {["Home", "About", "Our Tutors", "Events", "FAQs", "Contact"].map((item) => {
                 const href = item === "Home" ? "/" : item === "Our Tutors" ? "/our-tutors" : `/${item.toLowerCase()}`;
                 const isActive = pathname === href;
 
