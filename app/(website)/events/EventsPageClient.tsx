@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Calendar, MapPin, Clock, ArrowRight, Loader2, Search, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import { getEventStatus } from '@/lib/event-utils';
 
 type Event = {
     _id: string;
@@ -111,7 +112,11 @@ export default function EventsPageClient() {
             })
             .then(data => {
                 if (data.success && data.data) {
-                    setEvents(data.data);
+                    const processedEvents = data.data.map((e: Event) => ({
+                        ...e,
+                        status: getEventStatus(e.date, e.time)
+                    }));
+                    setEvents(processedEvents);
                 }
             })
             .catch(err => console.error('Error fetching events:', err))
@@ -129,7 +134,7 @@ export default function EventsPageClient() {
 
     return (
         <div className="min-h-screen bg-white flex flex-col">
-            <main className="flex-1 pt-32 pb-24">
+            <main className="flex-1 pt-6 pb-24">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col items-center text-center mb-16">
                         <motion.div
@@ -203,18 +208,18 @@ export default function EventsPageClient() {
                                         transition={{ duration: 0.3 }}
                                         className="group"
                                     >
-                                        <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/5">
-                                            <div className="h-48 relative overflow-hidden bg-gray-50">
+                                        <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden flex flex-col transition-all duration-300 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/5">
+                                            <div className="aspect-[3840/2559] relative overflow-hidden bg-gray-50">
                                                 {event.imageUrl ? (
                                                     <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                                 ) : (
-                                                    <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center">
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center">
                                                         <Calendar className="w-16 h-16 text-white/20" />
                                                     </div>
                                                 )}
                                                 <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
                                                     <div className="flex gap-2">
-                                                        <button 
+                                                        <button
                                                             onClick={(e) => handleShare(e, event)}
                                                             className="bg-white/95 backdrop-blur-sm p-2 rounded-xl text-gray-500 hover:text-blue-600 shadow-sm border border-white/50 transition-colors"
                                                             title="Share Event"
@@ -231,16 +236,14 @@ export default function EventsPageClient() {
                                                 </div>
                                             </div>
 
-                                            <div className="p-6 flex-1 flex flex-col">
-                                                <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-1 leading-snug group-hover:text-blue-600 transition-colors">
+                                            <div className="p-6 flex flex-col gap-3">
+                                                <h3 className="text-lg font-bold text-gray-900 line-clamp-1 leading-snug group-hover:text-blue-600 transition-colors">
                                                     {event.title}
                                                 </h3>
-
-                                                <p className="text-xs text-gray-500 mb-5 line-clamp-2 leading-relaxed font-medium">
+                                                <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed font-medium">
                                                     {stripHtml(event.description)}
                                                 </p>
-
-                                                <div className="space-y-2 mb-6 text-xs font-semibold text-gray-500">
+                                                <div className="space-y-2 text-xs font-semibold text-gray-500">
                                                     <div className="flex items-center">
                                                         <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center mr-3 border border-blue-100/50">
                                                             <Calendar className="w-3.5 h-3.5 text-blue-500" />
@@ -260,8 +263,7 @@ export default function EventsPageClient() {
                                                         <span className="truncate">{event.location}</span>
                                                     </div>
                                                 </div>
-
-                                                <div className="mt-auto pt-5 border-t border-gray-100">
+                                                <div className="pt-4 border-t border-gray-100">
                                                     <Link
                                                         href={`/events/${event.slug || event._id}`}
                                                         className="flex justify-between items-center w-full font-bold text-blue-600 hover:text-blue-800 transition-colors group/link"

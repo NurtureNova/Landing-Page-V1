@@ -7,4 +7,4 @@ const config = {
   priority: 0.7,
 };
 
-export default config;
+module.exports = config;

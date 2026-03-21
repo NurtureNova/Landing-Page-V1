@@ -16,7 +16,7 @@ export async function signAdminToken(adminId: string) {
     })
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('24h') // 24 hours expiry
+        .setExpirationTime('48h') // 48 hours expiry
         .sign(encodedSecret);
 
     return token;

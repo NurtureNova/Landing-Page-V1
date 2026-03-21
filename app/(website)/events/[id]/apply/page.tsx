@@ -34,7 +34,6 @@ export default function EventApplicationPage() {
         studentFullName: '',
         parentFullName: '',
         parentEmail: '',
-        parentPhone: '',
         schoolYear: '',
         programmeChoice: '',
         source: '',
@@ -138,7 +137,7 @@ export default function EventApplicationPage() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            <main className="flex-1 pt-32 pb-12">
+            <main className="flex-1 pt-6 pb-12">
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                     <Link href={`/events/${id}`} className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-8 font-medium">
                         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Event Details
@@ -205,55 +204,8 @@ export default function EventApplicationPage() {
                                                 placeholder="e.g. John Doe"
                                             />
                                         </div>
-                                    </div>
-
-                                    <div className="space-y-4 pt-4">
-                                        <h3 className="text-lg font-bold text-gray-900 border-b pb-2">Parent/Guardian Information</h3>
                                         <div>
-                                            <label htmlFor="parentFullName" className="block text-sm font-bold text-gray-700">2. Parent/ Guardian Full Name *</label>
-                                            <input
-                                                type="text"
-                                                name="parentFullName"
-                                                id="parentFullName"
-                                                required
-                                                value={formData.parentFullName}
-                                                onChange={handleChange}
-                                                className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500 bg-white"
-                                                placeholder="e.g. Jane Doe"
-                                            />
-                                        </div>
-
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="parentEmail" className="block text-sm font-bold text-gray-700">3. Parent/Guardian Email Address *</label>
-                                                <input
-                                                    type="email"
-                                                    name="parentEmail"
-                                                    id="parentEmail"
-                                                    required
-                                                    value={formData.parentEmail}
-                                                    onChange={handleChange}
-                                                    className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500 bg-white"
-                                                    placeholder="e.g. jane.doe@example.com"
-                                                />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="parentPhone" className="block text-sm font-bold text-gray-700">Parent/Guardian Phone Number *</label>
-                                                <input
-                                                    type="tel"
-                                                    name="parentPhone"
-                                                    id="parentPhone"
-                                                    required
-                                                    value={formData.parentPhone}
-                                                    onChange={handleChange}
-                                                    className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500 bg-white"
-                                                    placeholder="e.g. +44 123 456 7890"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="pt-2">
-                                            <label htmlFor="schoolYear" className="block text-sm font-bold text-gray-700">4. School Year *</label>
+                                            <label htmlFor="schoolYear" className="block text-sm font-bold text-gray-700">2. School Year *</label>
                                             <input
                                                 type="text"
                                                 name="schoolYear"
@@ -268,10 +220,40 @@ export default function EventApplicationPage() {
                                     </div>
 
                                     <div className="space-y-4 pt-4">
+                                        <h3 className="text-lg font-bold text-gray-900 border-b pb-2">Parent/Guardian Information</h3>
+                                        <div>
+                                            <label htmlFor="parentFullName" className="block text-sm font-bold text-gray-700">3. Parent/ Guardian Full Name *</label>
+                                            <input
+                                                type="text"
+                                                name="parentFullName"
+                                                id="parentFullName"
+                                                required
+                                                value={formData.parentFullName}
+                                                onChange={handleChange}
+                                                className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500 bg-white"
+                                                placeholder="e.g. Jane Doe"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="parentEmail" className="block text-sm font-bold text-gray-700">4. Parent/Guardian Email Address *</label>
+                                            <input
+                                                type="email"
+                                                name="parentEmail"
+                                                id="parentEmail"
+                                                required
+                                                value={formData.parentEmail}
+                                                onChange={handleChange}
+                                                className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder:text-gray-500 bg-white"
+                                                placeholder="e.g. jane.doe@example.com"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4 pt-4">
                                         <h3 className="text-lg font-bold text-gray-900 border-b pb-2">Programme & Source</h3>
                                         
                                         <div>
-                                            <label htmlFor="programmeChoice" className="block text-sm font-bold text-gray-700">5. Programme choice (Select One) *</label>
+                                            <label htmlFor="programmeChoice" className="block text-sm font-bold text-gray-700">5. Programme choice (Select one) *</label>
                                             <select
                                                 name="programmeChoice"
                                                 id="programmeChoice"
@@ -280,16 +262,16 @@ export default function EventApplicationPage() {
                                                 onChange={(e) => setFormData({ ...formData, programmeChoice: e.target.value })}
                                                 className="mt-1 block w-full border border-gray-300 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                             >
-                                                <option value="" disabled>-- Choose a Programme --</option>
+                                                <option value="" disabled>-- Select a Programme --</option>
                                                 <option value="11+ Bootcamp">11+ Bootcamp</option>
                                                 <option value="SATs Bootcamp">SATs Bootcamp</option>
                                             </select>
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-sm font-bold text-gray-700">6. How did you hear about the Boot Camp? *</label>
+                                            <label className="block text-sm font-bold text-gray-700">6. How did you hear about this Bootcamp? *</label>
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                {['Already an NNL student', 'Social media', 'From a friend', 'Others'].map((source) => (
+                                                {['Already an NNL Student', 'Social Media', 'From a Friend', 'Other'].map((source) => (
                                                     <label key={source} className="flex items-center space-x-3 p-3 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-colors">
                                                         <input
                                                             type="radio"
@@ -331,9 +313,9 @@ export default function EventApplicationPage() {
                                         >
                                             {submitting ? 'Submitting Application...' : 'Submit Application'}
                                         </button>
-                                        <p className="text-xs text-center text-gray-500 mt-4">
+                                        {/* <p className="text-xs text-center text-gray-500 mt-4">
                                             By submitting, you agree to our terms and conditions.
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </form>
                             </>

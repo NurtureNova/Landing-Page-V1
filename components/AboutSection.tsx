@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function AboutSection() {
   return (
     <section className="bg-white">
-      <div className="mx-16 flex max-w-6xl xl:max-w-full flex-col items-center gap-10 px-6 py-16 md:px-12 lg:flex-row lg:items-start lg:gap-16 lg:py-20 xl:px-16">
+      <div className="mx-2 sm:mx-4 md:mx-16 flex max-w-6xl xl:max-w-full flex-col items-center gap-10 px-2 sm:px-4 md:px-12 py-12 md:py-16 lg:flex-row lg:items-start lg:gap-16 lg:py-20 xl:px-16">
         <div className="flex w-full max-w-md justify-center lg:max-w-sm lg:justify-start xl:max-w-xl">
           <motion.div
             initial={{ opacity: 0, x: -50 }}

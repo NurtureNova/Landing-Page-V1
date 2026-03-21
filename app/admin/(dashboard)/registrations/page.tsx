@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Eye, Trash2, CheckCircle, XCircle, Clock, Loader2, Search } from 'lucide-react';
 import { toast } from 'sonner';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 type Registration = {
     _id: string;
@@ -16,6 +17,9 @@ export default function AdminRegistrationsPage() {
     const [loading, setLoading] = useState(true);
     const [modalReg, setModalReg] = useState<Registration | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [regToDelete, setRegToDelete] = useState<string | null>(null);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         fetchRegistrations();
@@ -54,20 +58,30 @@ export default function AdminRegistrationsPage() {
         }
     };
 
-    const deleteRegistration = async (id: string) => {
-        if (!confirm('Are you sure you want to permanently delete this registration?')) return;
+    const deleteRegistration = (id: string) => {
+        setRegToDelete(id);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!regToDelete) return;
+        setDeleting(true);
         try {
-            const res = await fetch(`/api/registrations/${id}`, { method: 'DELETE' });
+            const res = await fetch(`/api/registrations/${regToDelete}`, { method: 'DELETE' });
             const json = await res.json();
             if (json.success) {
                 toast.success('Registration deleted successfully');
-                setRegistrations(registrations.filter(r => r._id !== id));
-                if (modalReg?._id === id) setModalReg(null);
+                setRegistrations(registrations.filter(r => r._id !== regToDelete));
+                if (modalReg?._id === regToDelete) setModalReg(null);
+                setDeleteModalOpen(false);
+                setRegToDelete(null);
             } else {
                 toast.error(json.message || 'Failed to delete registration');
             }
         } catch {
             toast.error('Failed to delete registration');
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -226,6 +240,15 @@ export default function AdminRegistrationsPage() {
                     </div>
                 </div>
             )}
+
+            <DeleteConfirmationModal
+                isOpen={deleteModalOpen}
+                onClose={() => setDeleteModalOpen(false)}
+                onConfirm={confirmDelete}
+                loading={deleting}
+                title="Delete Registration"
+                message="Are you sure you want to permanently delete this registration? This action cannot be undone."
+            />
         </div>
     );
 }

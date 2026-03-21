@@ -5,6 +5,7 @@ import { Plus, Edit2, Trash2, Calendar, MapPin, Clock, Search, ExternalLink, Loa
 import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { getEventStatus } from '@/lib/event-utils';
 import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 type Event = {
@@ -39,7 +40,13 @@ export default function AdminEventsPage() {
             const res = await fetch('/api/events');
             if (!res.ok) throw new Error('Failed to fetch events');
             const json = await res.json();
-            if (json.success) setEvents(json.data);
+            if (json.success) {
+                const processedEvents = json.data.map((e: Event) => ({
+                    ...e,
+                    status: getEventStatus(e.date, e.time)
+                }));
+                setEvents(processedEvents);
+            }
         } catch (err) {
             console.error('An error occurred:', err);
             toast.error('Failed to load events');

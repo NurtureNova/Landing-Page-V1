@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Save } from 'lucide-react';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 
 type FormField = {
     id: string;
@@ -19,6 +20,8 @@ export default function CourseRegistrationSettings() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState('');
+    const [removeModalOpen, setRemoveModalOpen] = useState(false);
+    const [fieldIndexToRemove, setFieldIndexToRemove] = useState<number | null>(null);
 
     useEffect(() => {
         fetchSettings();
@@ -75,7 +78,15 @@ export default function CourseRegistrationSettings() {
     };
 
     const removeField = (index: number) => {
-        setFields(fields.filter((_, i) => i !== index));
+        setFieldIndexToRemove(index);
+        setRemoveModalOpen(true);
+    };
+
+    const confirmRemoveField = () => {
+        if (fieldIndexToRemove === null) return;
+        setFields(fields.filter((_, i) => i !== fieldIndexToRemove));
+        setRemoveModalOpen(false);
+        setFieldIndexToRemove(null);
     };
 
     const updateField = (index: number, key: keyof FormField, value: string | boolean | string[]) => {
@@ -235,6 +246,14 @@ export default function CourseRegistrationSettings() {
                     <Plus className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" /> Add New Field
                 </button>
             </div>
+
+            <DeleteConfirmationModal
+                isOpen={removeModalOpen}
+                onClose={() => setRemoveModalOpen(false)}
+                onConfirm={confirmRemoveField}
+                title="Remove Field"
+                message="Are you sure you want to remove this field? Any unsaved changes will be lost."
+            />
         </div>
     );
 }

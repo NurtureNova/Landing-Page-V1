@@ -50,7 +50,7 @@ export async function POST(
         const eventFullDate = new Date(event.date);
         eventFullDate.setHours(hours, minutes, 0, 0);
         const diffInMins = (eventFullDate.getTime() - new Date().getTime()) / (1000 * 60);
-        
+
         if (diffInMins < 30) {
             return NextResponse.json({ success: false, message: 'Applications for this event are now closed (cutoff reached).' }, { status: 400 });
         }
@@ -91,29 +91,37 @@ export async function POST(
         });
 
         // Send Confirmation Email
-        const emailHtml = `
-            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-                <h2 style="color: #2563eb;">Application Received!</h2>
-                <p>Dear ${body.parentFullName},</p>
-                <p>Thank you for applying for your child, <strong>${body.studentFullName}</strong>, to join the <strong>${event.title}</strong>.</p>
-                <p>We have received your application and will keep you updated with further details about the event.</p>
-                <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-top: 20px;">
-                    <h3 style="margin-top: 0;">Application Summary:</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><strong>Event:</strong> ${event.title}</li>
-                        <li><strong>Programme:</strong> ${body.programmeChoice}</li>
-                        <li><strong>Student:</strong> ${body.studentFullName}</li>
-                        <li><strong>School Year:</strong> ${body.schoolYear}</li>
-                    </ul>
+        let subject = `Confirmation: Application for ${event.title}`;
+        let emailHtml = "";
+
+        if (event.customEmailHtml) {
+            subject = event.customEmailSubject || subject;
+            emailHtml = event.customEmailHtml.replace(/Parent\/Guardian/g, body.parentFullName || 'Parent/Guardian');
+        } else {
+            emailHtml = `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <h2 style="color: #2563eb;">Application Received!</h2>
+                    <p>Dear ${body.parentFullName},</p>
+                    <p>Thank you for applying for your child, <strong>${body.studentFullName}</strong>, to join the <strong>${event.title}</strong>.</p>
+                    <p>We have received your application and will keep you updated with further details about the event.</p>
+                    <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                        <h3 style="margin-top: 0;">Application Summary:</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><strong>Event:</strong> ${event.title}</li>
+                            <li><strong>Programme:</strong> ${body.programmeChoice}</li>
+                            <li><strong>Student:</strong> ${body.studentFullName}</li>
+                            <li><strong>School Year:</strong> ${body.schoolYear}</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 20px;">If you have any questions, feel free to reply to this email.</p>
+                    <p>Best regards,<br>The Nurture Nova Learning Team</p>
                 </div>
-                <p style="margin-top: 20px;">If you have any questions, feel free to reply to this email.</p>
-                <p>Best regards,<br>The Nurture Nova Learning Team</p>
-            </div>
-        `;
+            `;
+        }
 
         sendEmail({
             to: body.parentEmail,
-            subject: `Confirmation: Application for ${event.title}`,
+            subject: subject,
             html: emailHtml
         }).catch(err => {
             console.error('Background task failed (Email sending):', err);

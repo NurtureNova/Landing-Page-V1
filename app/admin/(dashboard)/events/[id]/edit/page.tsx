@@ -1,19 +1,24 @@
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Save, Loader2, Calendar, MapPin, Clock, ImageIcon, Globe, Trash2 } from 'lucide-react';
+import { ArrowLeft, Save, Loader2, Calendar, MapPin, Clock, ImageIcon, Trash2, Plus } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import 'react-quill-new/dist/quill.snow.css';
 import { toast } from 'sonner';
+import { getEventStatus } from '@/lib/event-utils';
+import ImageUpload from '@/components/admin/ImageUpload';
+import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
+
+const QuillEditor = dynamic(() => import('@/components/admin/QuillEditor'), { ssr: false });
 
 export default function EditEventPage() {
-    const ReactQuill = useMemo(() => dynamic(() => import('react-quill-new'), { ssr: false }), []);
     const router = useRouter();
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [formData, setFormData] = useState({
         _id: '',
         title: '',
@@ -26,24 +31,12 @@ export default function EditEventPage() {
         imageUrl: '',
         requiresApplication: true,
         maxApplicants: '',
-        status: 'Upcoming'
+        status: 'Upcoming',
+        accordions: [] as { title: string; content: string }[],
+        footerContent: '',
+        customEmailSubject: '',
+        customEmailHtml: '',
     });
-
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['link', 'clean']
-        ],
-    };
-
-    const formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike',
-        'list', 'bullet',
-        'link'
-    ];
 
     useEffect(() => {
         if (id) {
@@ -62,6 +55,15 @@ export default function EditEventPage() {
                 .finally(() => setLoading(false));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (formData.date && formData.time) {
+            const calculatedStatus = getEventStatus(formData.date, formData.time);
+            if (calculatedStatus !== formData.status) {
+                setFormData(prev => ({ ...prev, status: calculatedStatus }));
+            }
+        }
+    }, [formData.date, formData.time, formData.status]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,21 +89,21 @@ export default function EditEventPage() {
     };
 
     const handleDelete = async () => {
-        if (!confirm("Are you sure you want to delete this event permanently?")) return;
-        
+        setDeleting(true);
         try {
-            const res = await fetch(`/api/events/${id}`, {
-                method: "DELETE",
-            });
+            const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
             const json = await res.json();
             if (json.success) {
                 toast.success('Event deleted successfully');
-                router.push("/admin/events");
+                router.push('/admin/events');
             } else {
                 toast.error(json.message || 'Failed to delete event');
             }
         } catch {
             toast.error('A network error occurred while deleting');
+        } finally {
+            setDeleting(false);
+            setDeleteModalOpen(false);
         }
     };
 
@@ -131,7 +133,7 @@ export default function EditEventPage() {
           </div>
 
           <button
-            onClick={handleDelete}
+            onClick={() => setDeleteModalOpen(true)}
             className="flex items-center px-4 py-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-xl font-bold transition-all border border-red-100 shadow-sm"
           >
             <Trash2 className="w-4 h-4 mr-2" /> Delete Event
@@ -189,15 +191,12 @@ export default function EditEventPage() {
                     Detailed Description <span className="text-red-500">*</span>
                   </label>
                   <div className="prose-slate">
-                    <ReactQuill
-                      theme="snow"
+                    <QuillEditor
                       value={formData.description}
                       onChange={(content) =>
                         setFormData({ ...formData, description: content })
                       }
-                      modules={modules}
-                      formats={formats}
-                      className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[250px]  focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none text-slate-900 font-medium"
+                      className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden min-h-[250px] text-slate-900 font-medium"
                     />
                   </div>
                 </div>
@@ -341,6 +340,121 @@ export default function EditEventPage() {
               </div>
             </div>
 
+            {/* Accordion Sections */}
+            <div className="pt-8 border-t border-slate-100 space-y-6">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center">
+                <span className="bg-amber-100 text-amber-600 p-2 rounded-lg mr-3">
+                  <Calendar className="w-5 h-5" />
+                </span>
+                Accordion Sections
+              </h3>
+
+              <div className="space-y-4">
+                {formData.accordions.map((accordion, index) => (
+                  <div key={index} className="bg-slate-50 border border-slate-200 rounded-2xl p-6 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold text-slate-600 uppercase tracking-widest">Section {index + 1}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = formData.accordions.filter((_, i) => i !== index);
+                          setFormData({ ...formData, accordions: updated });
+                        }}
+                        className="flex items-center px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg text-xs font-bold transition"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 mr-1" /> Remove
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-slate-700">Section Title</label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none text-slate-900 font-medium"
+                        placeholder="e.g. What to Expect"
+                        value={accordion.title}
+                        onChange={(e) => {
+                          const updated = [...formData.accordions];
+                          updated[index] = { ...updated[index], title: e.target.value };
+                          setFormData({ ...formData, accordions: updated });
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-slate-700">Section Content</label>
+                      <div className="prose-editor text-black">
+                        <QuillEditor
+                          value={accordion.content}
+                          onChange={(content) => {
+                            const updated = [...formData.accordions];
+                            updated[index] = { ...updated[index], content };
+                            setFormData({ ...formData, accordions: updated });
+                          }}
+                          className="bg-white border border-slate-200 rounded-xl overflow-hidden"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, accordions: [...formData.accordions, { title: '', content: '' }] })}
+                  className="w-full py-3 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 hover:border-blue-400 hover:text-blue-600 font-bold transition flex items-center justify-center gap-2"
+                >
+                  <Plus className="w-4 h-4" /> Add Accordion Section
+                </button>
+              </div>
+            </div>
+
+            {/* Footer Content */}
+            <div className="pt-8 border-t border-slate-100 space-y-6">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center">
+                <span className="bg-teal-100 text-teal-600 p-2 rounded-lg mr-3">
+                  <ImageIcon className="w-5 h-5" />
+                </span>
+                Footer Content
+              </h3>
+              <div className="prose-editor text-black">
+                <QuillEditor
+                  value={formData.footerContent}
+                  onChange={(content) => setFormData({ ...formData, footerContent: content })}
+                  className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden"
+                />
+              </div>
+            </div>
+
+            {/* Custom Email */}
+            <div className="pt-8 border-t border-slate-100 space-y-6">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center">
+                <span className="bg-rose-100 text-rose-600 p-2 rounded-lg mr-3">
+                  <Clock className="w-5 h-5" />
+                </span>
+                Custom Application Email
+              </h3>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700">Email Subject</label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none text-slate-900 font-medium"
+                    placeholder="e.g. Your application has been received"
+                    value={formData.customEmailSubject}
+                    onChange={(e) => setFormData({ ...formData, customEmailSubject: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700">Email Body (HTML)</label>
+                  <div className="prose-editor text-black">
+                    <QuillEditor
+                      value={formData.customEmailHtml}
+                      onChange={(content) => setFormData({ ...formData, customEmailHtml: content })}
+                      className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Media & Options */}
             <div className="pt-8 border-t border-slate-100 space-y-6">
               <h3 className="text-lg font-bold text-slate-900 flex items-center">
@@ -352,19 +466,12 @@ export default function EditEventPage() {
 
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-700">
-                  Cover Image URL
+                  Cover Image
                 </label>
-                <div className="relative">
-                  <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input
-                    type="url"
-                    className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none text-slate-900 font-medium"
-                    value={formData.imageUrl}
-                    onChange={(e) =>
-                      setFormData({ ...formData, imageUrl: e.target.value })
-                    }
-                  />
-                </div>
+                <ImageUpload
+                  value={formData.imageUrl}
+                  onChange={(url) => setFormData({ ...formData, imageUrl: url })}
+                />
               </div>
             </div>
           </div>
@@ -390,6 +497,15 @@ export default function EditEventPage() {
             </button>
           </div>
         </form>
+
+        <DeleteConfirmationModal
+            isOpen={deleteModalOpen}
+            onClose={() => setDeleteModalOpen(false)}
+            onConfirm={handleDelete}
+            loading={deleting}
+            title="Delete Event"
+            message="Are you sure you want to permanently delete this event? This action cannot be undone and will affect all related applications."
+        />
       </div>
     );
 }

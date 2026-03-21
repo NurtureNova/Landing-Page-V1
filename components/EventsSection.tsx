@@ -7,6 +7,7 @@ import { Calendar, MapPin, Clock, ArrowRight, Sparkles, ChevronRight, Share2 } f
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { toast } from 'sonner';
+import { getEventStatus } from '@/lib/event-utils';
 
 type Event = {
     _id: string;
@@ -100,8 +101,14 @@ export default function EventsSection() {
             })
             .then(data => {
                 if (data.success && data.data) {
-                    // Show only upcoming/ongoing events, limit to 3
-                    const activeEvents = data.data.filter((e: Event) => e.status !== 'Completed').slice(0, 3);
+                    // Update: Calculate status on the fly based on timing
+                    const activeEvents = data.data
+                        .map((e: Event) => ({
+                            ...e,
+                            status: getEventStatus(e.date, e.time)
+                        }))
+                        .filter((e: Event) => e.status !== 'Completed')
+                        .slice(0, 6);
                     setEvents(activeEvents);
                 }
             })
@@ -165,19 +172,18 @@ export default function EventsSection() {
                                 transition={{ delay: index * 0.1, duration: 0.4 }}
                                 className="group"
                             >
-                                <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col h-full transition-all duration-300 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10">
-                                    <div className="h-44 relative overflow-hidden">
+                                <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col transition-all duration-300 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/10">
+                                    <div className="aspect-[3840/2559] relative overflow-hidden bg-gray-50">
                                         {event.imageUrl ? (
                                             <Image src={event.imageUrl} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                                         ) : (
-                                            <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
                                                 <Calendar className="w-10 h-10 text-white/20" />
                                             </div>
                                         )}
-                                        
                                         <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
                                             <div className="flex gap-1.5">
-                                                <button 
+                                                <button
                                                     onClick={(e) => handleShare(e, event)}
                                                     className="bg-white/95 backdrop-blur-sm p-1.5 rounded-lg text-gray-500 hover:text-blue-600 shadow-sm border border-white/50 transition-colors"
                                                     title="Share Event"
@@ -192,42 +198,38 @@ export default function EventsSection() {
                                                 <CountdownBadge targetDate={event.date} />
                                             )}
                                         </div>
-
-                                        <div className="absolute bottom-3 left-3">
-                                            <div className="flex items-center text-[10px] font-bold bg-black/50 text-white px-2.5 py-1 rounded-md backdrop-blur-md">
-                                                <Clock className="w-3 h-3 mr-1.5" /> {event.time}
-                                            </div>
-                                        </div>
                                     </div>
 
-                                    <div className="p-5 flex-1 flex flex-col">
-                                        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-1 leading-snug group-hover:text-blue-600 transition-colors">
+                                    <div className="p-5 flex flex-col gap-3">
+                                        <h3 className="text-base font-bold text-gray-900 line-clamp-1 leading-snug group-hover:text-blue-600 transition-colors">
                                             {event.title}
                                         </h3>
-
-                                        <p className="text-xs text-gray-500 mb-4 line-clamp-2 leading-relaxed font-medium">
+                                        <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed font-medium">
                                             {stripHtml(event.description)}
                                         </p>
-
-                                        <div className="space-y-1.5 mb-5 text-[11px] font-medium text-gray-500">
+                                        <div className="space-y-1.5 text-[11px] font-medium text-gray-500">
                                             <div className="flex items-center">
                                                 <Calendar className="w-3 h-3 mr-2.5 text-blue-500" />
                                                 <span>{new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                             </div>
-                                            
                                             <div className="flex items-center">
-                                                <MapPin className="w-3 h-3 mr-2.5 text-indigo-500" />
+                                                <Clock className="w-3 h-3 mr-2.5 text-indigo-500" />
+                                                <span>{event.time}</span>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <MapPin className="w-3 h-3 mr-2.5 text-red-400" />
                                                 <span className="truncate">{event.location}</span>
                                             </div>
                                         </div>
-
-                                        <div className="mt-auto pt-4 border-t border-gray-100">
+                                        <div className="pt-3 border-t border-gray-100">
                                             <Link
                                                 href={`/events/${event.slug || event._id}`}
-                                                className="inline-flex items-center font-bold text-blue-600 hover:text-blue-700 transition-colors text-[10px] uppercase tracking-wider group/btn"
+                                                className="flex justify-between items-center w-full font-bold text-blue-600 hover:text-blue-800 transition-colors group/link"
                                             >
-                                                Details
-                                                <ArrowRight className="ml-1.5 w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
+                                                <span className="text-[10px] uppercase tracking-widest">View Details</span>
+                                                <div className="bg-blue-50 p-2 rounded-xl group-hover/link:bg-blue-600 group-hover/link:text-white transition-all">
+                                                    <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
+                                                </div>
                                             </Link>
                                         </div>
                                     </div>

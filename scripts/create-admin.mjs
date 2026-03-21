@@ -34,19 +34,14 @@ async function createAdmin() {
     }, { timestamps: true });
 
     // Hash password before saving (consistent with model)
-    AdminSchema.pre('save', async function (next) {
+    AdminSchema.pre('save', async function () {
         if (!this.isModified('password')) {
-            return next();
+            return;
         }
-        try {
-            // We use dynamic import for bcrypt here as it might not be in the node path for this script easily
-            const bcrypt = (await import('bcryptjs')).default;
-            const salt = await bcrypt.genSalt(10);
-            this.password = await bcrypt.hash(this.password, salt);
-            next();
-        } catch (error) {
-            next(error);
-        }
+        // We use dynamic import for bcrypt here as it might not be in the node path for this script easily
+        const bcrypt = (await import('bcryptjs')).default;
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
     });
 
     const Admin = mongoose.models.Admin || mongoose.model('Admin', AdminSchema);

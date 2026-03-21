@@ -16,6 +16,13 @@ const EventSchema = new mongoose.Schema({
         enum: ['Upcoming', 'Ongoing', 'Completed'],
         default: 'Upcoming'
     },
+    accordions: [{
+        title: { type: String },
+        content: { type: String }
+    }],
+    footerContent: { type: String },
+    customEmailSubject: { type: String },
+    customEmailHtml: { type: String },
 }, { timestamps: true });
 
 export default mongoose.models.Event || mongoose.model('Event', EventSchema);

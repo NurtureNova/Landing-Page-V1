@@ -61,7 +61,7 @@ const WhyChooseUs: React.FC = () => {
 
   return (
     <section>
-      <div className="mx-16 grid max-w-6xl xl:max-w-full grid-cols-1 gap-8 px-6 py-14 md:grid-cols-2 md:space-y-0 md:px-12 md:py-24 lg:items-start lg:gap-14 xl:px-16">
+      <div className="mx-2 sm:mx-4 md:mx-16 grid max-w-6xl xl:max-w-full grid-cols-1 gap-8 px-2 sm:px-4 md:px-12 py-10 md:py-24 md:grid-cols-2 md:space-y-0 lg:items-start lg:gap-14 xl:px-16">
         <div className="flex w-full justify-center lg:justify-start">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -120,7 +120,7 @@ const WhyChooseUs: React.FC = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3 }}
-                      className="text-sm text-[#111111] font-urbanist font-medium mt-4"
+                      className="text-sm text-[#111111] font-urbanist font-medium mt-4 text-justify hyphens-none break-normal"
                     >
                       {item.description}
                     </motion.p>
