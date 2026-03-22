@@ -5,7 +5,6 @@ const EventApplicationSchema = new mongoose.Schema({
     studentFullName: { type: String, required: true },
     parentFullName: { type: String, required: true },
     parentEmail: { type: String, required: true },
-    parentPhone: { type: String, required: true },
     schoolYear: { type: String, required: true },
     programmeChoice: { type: String, required: true },
     source: { type: String, required: true },

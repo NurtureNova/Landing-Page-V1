@@ -21,7 +21,14 @@ export async function GET(
     try {
         await dbConnect();
         const { id } = await params;
-        const applications = await EventApplication.find({ eventId: id }).sort({ createdAt: -1 });
+        const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        let eventId = id;
+        if (!isValidObjectId) {
+            const event = await Event.findOne({ slug: id }).select('_id').lean();
+            if (!event) return NextResponse.json({ success: false, message: 'Event Not Found' }, { status: 404 });
+            eventId = (event._id as string).toString();
+        }
+        const applications = await EventApplication.find({ eventId }).sort({ createdAt: -1 });
         return NextResponse.json({ success: true, data: applications });
     } catch {
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });
@@ -37,7 +44,10 @@ export async function POST(
         const { id } = await params;
         const body = await request.json();
 
-        const event = await Event.findById(id);
+        const isValidObjectId = /^[0-9a-fA-F]{24}$/.test(id);
+        const event = isValidObjectId
+            ? await Event.findById(id)
+            : await Event.findOne({ slug: id });
         if (!event) return NextResponse.json({ success: false, message: 'Event Not Found' }, { status: 404 });
 
         // Check if event is completed
@@ -57,13 +67,13 @@ export async function POST(
 
         // Check capacity
         if (event.maxApplicants) {
-            const currentCount = await EventApplication.countDocuments({ eventId: id });
+            const currentCount = await EventApplication.countDocuments({ eventId: event._id });
             if (currentCount >= event.maxApplicants) {
                 return NextResponse.json({ success: false, message: 'This event has reached its maximum capacity of applicants.' }, { status: 400 });
             }
         }
 
-        const appData = { ...body, eventId: id };
+        const appData = { ...body, eventId: event._id };
         const application = await EventApplication.create(appData);
 
         // Background tasks
@@ -79,7 +89,6 @@ export async function POST(
             StudentFullName: body.studentFullName || 'N/A',
             ParentFullName: body.parentFullName || 'N/A',
             ParentEmail: body.parentEmail || 'N/A',
-            ParentPhone: body.parentPhone || 'N/A',
             SchoolYear: body.schoolYear || 'N/A',
             ProgrammeChoice: body.programmeChoice || 'N/A',
             Source: body.source === 'Others' ? (body.sourceOther || 'Others') : (body.source || 'N/A'),
