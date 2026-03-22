@@ -50,7 +50,6 @@ export async function GET(request: Request) {
                 { studentFullName: regex },
                 { parentFullName: regex },
                 { parentEmail: regex },
-                { parentPhone: regex },
                 { programmeChoice: regex }
             ]
         }).limit(5).lean();
@@ -71,8 +70,7 @@ export async function GET(request: Request) {
                 { "formData.studentFullName": regex },
                 { "formData.email": regex },
                 { "formData.parentEmail": regex },
-                { "formData.phone": regex },
-                { "formData.parentPhone": regex }
+                { "formData.phone": regex }
             ]
         }).limit(5).lean();
 

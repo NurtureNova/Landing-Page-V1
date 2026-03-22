@@ -58,7 +58,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // 3. Protect write operations on other API routes (e.g., /api/events)
-  if (pathname.startsWith('/api/events') && request.method !== 'GET') {
+  // Exclude public event application submissions (/api/events/[id]/applications POST)
+  if (pathname.startsWith('/api/events') && request.method !== 'GET' && !pathname.endsWith('/applications')) {
     const token = request.cookies.get('admin_token')?.value;
 
     if (!token) {

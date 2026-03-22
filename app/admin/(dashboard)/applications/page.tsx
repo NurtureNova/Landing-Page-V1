@@ -11,7 +11,6 @@ type Application = {
     studentFullName: string;
     parentFullName: string;
     parentEmail: string;
-    parentPhone: string;
     schoolYear: string;
     programmeChoice: string;
     source: string;
@@ -214,7 +213,6 @@ function ApplicationsContent() {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <div className="text-gray-900 font-medium">{app.parentFullName}</div>
                                             <div>{app.parentEmail}</div>
-                                            <div>{app.parentPhone}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {new Date(app.createdAt).toLocaleDateString()}
@@ -278,10 +276,7 @@ function ApplicationsContent() {
                                         <span className="font-bold w-24">Email:</span>
                                         <a href={`mailto:${modalApp.parentEmail}`} className="text-blue-600 hover:underline">{modalApp.parentEmail}</a>
                                     </div>
-                                    <div className="flex items-center text-sm text-gray-700">
-                                        <span className="font-bold w-24">Phone:</span>
-                                        <a href={`tel:${modalApp.parentPhone}`} className="text-blue-600 hover:underline">{modalApp.parentPhone}</a>
-                                    </div>
+
                                 </div>
                             </div>
 
