@@ -35,9 +35,7 @@ export async function POST(request: Request) {
             DateApplied: new Date().toLocaleString(),
             Status: 'Pending',
             ...body
-        }).catch(err => {
-            console.error('Background task failed (Google Sheets push):', err);
-        });
+        }).catch(() => {});
 
         return NextResponse.json({ success: true, data: registration }, { status: 201 });
     } catch (error) {
