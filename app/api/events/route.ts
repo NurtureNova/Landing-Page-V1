@@ -9,8 +9,7 @@ export async function GET() {
         await dbConnect();
         const events = await Event.find({}).sort({ date: 1 });
         return NextResponse.json({ success: true, data: events });
-    } catch (error) {
-        console.error('API /events GET error:', error);
+    } catch {
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });
     }
 }
@@ -31,7 +30,6 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: true, data: event }, { status: 201 });
     } catch (error) {
     const errMessage = error instanceof Error ? error.message : "Unknown error";
-        console.error('API /events POST error:', error);
         return NextResponse.json({ success: false, message: errMessage }, { status: 400 });
     }
 }

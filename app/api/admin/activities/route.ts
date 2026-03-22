@@ -66,8 +66,7 @@ export async function GET(request: Request) {
             success: true,
             data: activities.slice(0, limit)
         });
-    } catch (error) {
-        console.error('Activities error:', error);
+    } catch {
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });
     }
 }
@@ -96,8 +95,7 @@ export async function POST(request: Request) {
         }
 
         return NextResponse.json({ success: false, message: 'Invalid action' }, { status: 400 });
-    } catch (error) {
-        console.error('Activities update error:', error);
+    } catch {
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });
     }
 }

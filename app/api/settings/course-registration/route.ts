@@ -16,7 +16,6 @@ export async function GET() {
     try {
         await dbConnect();
         const settings = await CourseSetting.findOne({ key: 'default_registration_form' });
-        console.log('Fetched settings from DB:', settings);
 
         const defaultData = {
             fields: [],
@@ -50,7 +49,6 @@ export async function POST(request: Request) {
         await dbConnect();
         const body = await request.json();
         const { fields, title, description, isOpen } = body;
-        console.log('Incoming save body:', body);
 
         // Use updateOne with upsert to be more explicit and potentially bypass model caching issues
         await CourseSetting.updateOne(
@@ -60,7 +58,6 @@ export async function POST(request: Request) {
         );
 
         const settings = await CourseSetting.findOne({ key: 'default_registration_form' });
-        console.log('Saved settings result:', settings);
 
         return NextResponse.json({ success: true, data: settings });
     } catch (error) {

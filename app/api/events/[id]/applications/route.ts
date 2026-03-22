@@ -95,9 +95,7 @@ export async function POST(
         };
 
         // Push to Google Sheets
-        appendToSheet('Event_Applications', sheetData).catch(err => {
-            console.error('Background task failed (Google Sheets push):', err);
-        });
+        appendToSheet('Event_Applications', sheetData).catch(() => {});
 
         // Send Confirmation Email
         let subject = `Confirmation: Application for ${event.title}`;
@@ -132,9 +130,7 @@ export async function POST(
             to: body.parentEmail,
             subject: subject,
             html: emailHtml
-        }).catch(err => {
-            console.error('Background task failed (Email sending):', err);
-        });
+        }).catch(() => {});
 
         return NextResponse.json({ success: true, data: application }, { status: 201 });
     } catch (error) {

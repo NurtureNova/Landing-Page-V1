@@ -8,7 +8,6 @@ export async function appendToSheet(sheetName: string, data: Record<string, stri
     const sheetId = process.env.GOOGLE_SHEET_ID;
 
     if (!clientEmail || !privateKey || !sheetId) {
-        console.warn('Google Sheets configuration is missing. Data will not be pushed to sheets.');
         return;
     }
 
@@ -46,7 +45,6 @@ export async function appendToSheet(sheetName: string, data: Record<string, stri
 
         await sheet.addRow(data);
     } catch (error) {
-        console.error('Failed to append to Google Sheet:', error);
-        throw error; // Throw so we can catch it upstream if needed
+        throw error;
     }
 }

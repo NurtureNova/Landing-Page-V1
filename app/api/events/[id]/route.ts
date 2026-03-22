@@ -43,8 +43,7 @@ export async function GET(
                 applicationCount 
             } 
         });
-    } catch (error) {
-        console.error('Event fetch error:', error);
+    } catch {
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });
     }
 }
