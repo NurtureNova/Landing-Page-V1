@@ -1,7 +1,9 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.hostinger.com',
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -19,7 +21,8 @@ export async function sendEmail({ to, subject, html }: { to: string; subject: st
     try {
         const info = await transporter.sendMail(mailOptions);
         return { success: true, messageId: info.messageId };
-    } catch {
-        return { success: false };
+    } catch (error) {
+        console.error('sendEmail failed:', error);
+        return { success: false, error };
     }
 }

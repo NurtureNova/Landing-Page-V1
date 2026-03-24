@@ -130,7 +130,7 @@ export async function POST(
             to: body.parentEmail,
             subject: subject,
             html: emailHtml
-        }).catch(() => {});
+        }).catch((err) => console.error('Email error:', err));
 
         return NextResponse.json({ success: true, data: application }, { status: 201 });
     } catch (error) {
