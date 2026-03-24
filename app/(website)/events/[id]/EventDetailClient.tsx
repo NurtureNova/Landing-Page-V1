@@ -134,7 +134,7 @@ export default function EventDetailClient({ id }: { id: string }) {
   useEffect(() => {
     if (event && event.description) {
       // eslint-disable-next-line no-console
-      console.log("Event Description HTML:", event.description);
+      // console.log("Event Description HTML:", event.description);
     }
   }, [event]);
 
