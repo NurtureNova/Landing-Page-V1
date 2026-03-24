@@ -126,13 +126,14 @@ export async function POST(
             `;
         }
 
-        sendEmail({
+        const emailResult = await sendEmail({
             to: body.parentEmail,
             subject: subject,
             html: emailHtml
-        }).catch((err) => console.error('Email error:', err));
+        });
+        console.log('Email result:', JSON.stringify(emailResult));
 
-        return NextResponse.json({ success: true, data: application }, { status: 201 });
+        return NextResponse.json({ success: true, data: application, emailResult }, { status: 201 });
     } catch (error) {
         const errMessage = error instanceof Error ? error.message : "Unknown error";
         return NextResponse.json({ success: false, message: errMessage }, { status: 400 });
