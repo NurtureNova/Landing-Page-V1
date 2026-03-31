@@ -1,22 +1,25 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+    host: 'smtp.hostinger.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+});
 
 export async function sendEmail({ to, subject, html }: { to: string; subject: string; html: string }) {
     try {
-        const { data, error } = await resend.emails.send({
-            from: 'Nurture Nova Learning <admin@nurturenovalearning.com>',
+        const info = await transporter.sendMail({
+            from: `Nurture Nova Learning <${process.env.EMAIL_USER}>`,
             to,
             subject,
             html,
         });
 
-        if (error) {
-            console.error('sendEmail failed:', error);
-            return { success: false, error };
-        }
-
-        return { success: true, messageId: data?.id };
+        return { success: true, messageId: info.messageId };
     } catch (error) {
         console.error('sendEmail failed:', error);
         return { success: false, error };
